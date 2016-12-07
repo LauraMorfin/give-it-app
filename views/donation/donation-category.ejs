@@ -20,8 +20,8 @@
 </p>
 
 <div id="floating-panel">
-  <b>Start: </b>
-  <button type="button" id="start">button</button>
+    <!--<b>Navigation: </b>-->
+    <button class="nav-image btn" type="button" id="start">pies</button>
 </div>
 
 <div id="map">
@@ -38,8 +38,7 @@
       directionsDisplay.setMap(map);
 
       var trafficLayer = new google.maps.TrafficLayer();
-            trafficLayer.setMap(map);
-
+        trafficLayer.setMap(map);
 
       var infoWindow = new google.maps.InfoWindow({map: map});
 
@@ -52,15 +51,17 @@
 
           var lat = String(pos.lat)+' ';
           var lng = String(pos.lng);
-
+          var endlat = String(<%=donation.location.lat%>)+' ';
+          var endlng = String(<%=donation.location.lng%>);
           //anything that requires longitude and latitude must make changes here
 
 
           //============================================================
+
           function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             directionsService.route({
               origin: lat+lng,
-              destination: '26.268383 -98.219369',
+              destination: endlat+endlng,
               travelMode: 'DRIVING'
             }, function(response, status) {
               if (status === 'OK') {
@@ -77,7 +78,7 @@
           document.getElementById('start').addEventListener('click', onChangeHandler);/*{lat: 41.065669, lng: -89.587285}*/
 
           infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found.');
+          infoWindow.setContent('Vous êtes ici...');
           map.setCenter(pos);
         }, function() {
           handleLocationError(true, infoWindow, map.getCenter());
@@ -117,7 +118,7 @@
                             'Error: Your browser doesn\'t support geolocation.');
     }
 
-    var locations = [<%=donation.location%>,{lat: 26.268383, lng: -98.219369}];
+    var locations = [<%=donation.location%>/*,{lat: 26.268383, lng: -98.219369}*/];
 
     // function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     //   directionsService.route({
